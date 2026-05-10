@@ -1,41 +1,50 @@
+import { supabase } from '../lib/supabase';
+
 export interface Inquiry {
   id: string;
   name: string;
   email: string;
   phone: string;
   message: string;
-  productName?: string;
-  createdAt: string;
+  product_name?: string;
+  created_at: string;
   status: 'new' | 'read' | 'contacted';
 }
 
-const STORAGE_KEY = 'regilaqua_inquiries';
-
 export const inquiryService = {
-  getInquiries: (): Inquiry[] => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+  getInquiries: async (): Promise<Inquiry[]> => {
+    const { data, error } = await supabase
+      .from('inquiries')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data || [];
   },
   
-  addInquiry: (inquiry: Omit<Inquiry, 'id' | 'createdAt' | 'status'>): void => {
-    const inquiries = inquiryService.getInquiries();
-    const newInquiry: Inquiry = {
-      ...inquiry,
-      id: Math.random().toString(36).substring(2, 9),
-      createdAt: new Date().toISOString(),
-      status: 'new'
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([newInquiry, ...inquiries]));
+  addInquiry: async (inquiry: Omit<Inquiry, 'id' | 'created_at' | 'status'>): Promise<void> => {
+    const { error } = await supabase
+      .from('inquiries')
+      .insert([{
+        ...inquiry,
+        status: 'new'
+      }]);
+    if (error) throw error;
   },
 
-  updateStatus: (id: string, status: Inquiry['status']): void => {
-    const inquiries = inquiryService.getInquiries();
-    const updated = inquiries.map(i => i.id === id ? { ...i, status } : i);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  updateStatus: async (id: string, status: Inquiry['status']): Promise<void> => {
+    const { error } = await supabase
+      .from('inquiries')
+      .update({ status })
+      .eq('id', id);
+    if (error) throw error;
   },
 
-  deleteInquiry: (id: string): void => {
-    const inquiries = inquiryService.getInquiries();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(inquiries.filter(i => i.id !== id)));
+  deleteInquiry: async (id: string): Promise<void> => {
+    const { error } = await supabase
+      .from('inquiries')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
   }
 };

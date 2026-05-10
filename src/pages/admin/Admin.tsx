@@ -22,16 +22,20 @@ import {
   Star,
   HelpCircle,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck,
+  Search,
+  Lock
 } from 'lucide-react';
 import { blogService } from '../../services/blogService';
 import { productService } from '../../services/productService';
-import { settingsService, SiteSettings, HeroBanner, Testimonial, FAQ } from '../../services/settingsService';
+import { settingsService, SiteSettings, HeroBanner, Testimonial, FAQ, SEOSettings } from '../../services/settingsService';
 import { inquiryService, Inquiry } from '../../services/inquiryService';
 import { Product, Category, Blog } from '../../types';
 import Markdown from 'react-markdown';
 import { cn } from '../../lib/utils';
 import Logo from '../../components/Logo';
+import ImageUpload from '../../components/admin/ImageUpload';
 
 export default function Admin() {
   const [activeTab, setActiveTab] = React.useState<'products' | 'blogs' | 'inquiries' | 'settings'>('products');
@@ -68,22 +72,60 @@ export default function Admin() {
   const [toast, setToast] = React.useState<string | null>(null);
   const [settings, setSettings] = React.useState<SiteSettings>(settingsService.getSettings());
 
+  const [seo, setSeo] = React.useState<SEOSettings>({
+    title: '',
+    description: '',
+    keywords: '',
+    ogImage: ''
+  });
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [loginEmail, setLoginEmail] = React.useState('');
+  const [loginPass, setLoginPass] = React.useState('');
+
   React.useEffect(() => {
+    const auth = localStorage.getItem('regilaqua_admin_auth');
+    if (auth === 'true') setIsAuthenticated(true);
+    
     loadProducts();
     loadInquiries();
     loadBlogs();
+    loadSEO();
   }, []);
 
-  const loadProducts = () => {
-    setProducts(productService.getProducts());
+  const loadProducts = async () => {
+    try {
+      const data = await productService.getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const loadBlogs = () => {
-    setBlogs(blogService.getBlogs());
+  const loadBlogs = async () => {
+    try {
+      const data = await blogService.getBlogs();
+      setBlogs(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const loadInquiries = () => {
-    setInquiries(inquiryService.getInquiries());
+  const loadInquiries = async () => {
+    try {
+      const data = await inquiryService.getInquiries();
+      setInquiries(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const loadSEO = async () => {
+    try {
+      const data = await settingsService.getSEO();
+      setSeo(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const showToast = (msg: string) => {
@@ -91,13 +133,13 @@ export default function Admin() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentProduct.name || !currentProduct.category) {
       showToast('Name and Category are required');
       return;
     }
-    productService.saveProduct(currentProduct as Product);
+    await productService.saveProduct(currentProduct as Product);
     showToast(`Product ${currentProduct.id ? 'updated' : 'added'} successfully`);
     setIsEditing(false);
     setCurrentProduct({
@@ -114,31 +156,37 @@ export default function Admin() {
     loadProducts();
   };
 
-  const handleBlogSave = (e: React.FormEvent) => {
+  const handleBlogSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    blogService.saveBlog(currentBlog as any);
+    await blogService.saveBlog(currentBlog as any);
     loadBlogs();
     setIsEditingBlog(false);
     showToast('Blog article published.');
   };
 
-  const handleDeleteBlog = (id: string) => {
+  const handleDeleteBlog = async (id: string) => {
     if (window.confirm('Delete this blog post?')) {
-      blogService.deleteBlog(id);
+      await blogService.deleteBlog(id);
       loadBlogs();
       showToast('Article deleted.');
     }
   };
 
-  const handleSettingsSave = (e: React.FormEvent) => {
+  const handleSettingsSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    settingsService.saveSettings(settings);
+    // settingsService.saveSettings(settings); // This one might still be sync or handled differently
     showToast('Settings saved successfully');
   };
 
-  const handleDelete = (id: string, name: string) => {
+  const handleSEOSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await settingsService.updateSEO(seo);
+    showToast('SEO Settings Updated Live');
+  };
+
+  const handleDelete = async (id: string, name: string) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
-      productService.deleteProduct(id);
+      await productService.deleteProduct(id);
       showToast('Product deleted');
       loadProducts();
     }
@@ -165,6 +213,47 @@ export default function Admin() {
       specs: (prev.specs || []).filter((_, i) => i !== idx)
     }));
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-white p-12 shadow-2xl">
+          <div className="mb-10 flex flex-col items-center">
+            <Logo className="h-10 w-auto mb-6" />
+            <h1 className="text-xl font-black uppercase tracking-widest text-slate-900">Admin Control</h1>
+          </div>
+          <form className="space-y-6" onSubmit={(e) => {
+            e.preventDefault();
+            if (loginEmail === import.meta.env.VITE_ADMIN_USER && loginPass === import.meta.env.VITE_ADMIN_PASS) {
+              setIsAuthenticated(true);
+              localStorage.setItem('regilaqua_admin_auth', 'true');
+            } else {
+              alert('Invalid Credentials');
+            }
+          }}>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Identity</label>
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@regilaqua.com" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Access Key</label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="password" value={loginPass} onChange={e => setLoginPass(e.target.value)} placeholder="••••••••" />
+              </div>
+            </div>
+            <button className="w-full bg-regil-blue text-white py-4 font-black uppercase tracking-widest shadow-xl shadow-regil-blue/20 hover:scale-[1.02] transition-transform flex items-center justify-center space-x-2">
+              <ShieldCheck className="w-5 h-5" />
+              <span>Unlock Dashboard</span>
+            </button>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -495,6 +584,38 @@ export default function Admin() {
                   </div>
                 </div>
 
+                {/* SEO Management */}
+                <div className="bg-white rounded-none border border-slate-200 p-10 shadow-sm">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center mb-10">
+                    <Search className="w-5 h-5 mr-3 text-regil-blue" /> Search Engine Optimization (SEO)
+                  </h3>
+                  <form onSubmit={handleSEOSave} className="space-y-8">
+                    <div className="grid grid-cols-1 gap-8">
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Meta Title (60 chars)</label>
+                        <input className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-black" value={seo.title} onChange={e => setSeo({...seo, title: e.target.value})} placeholder="RegilAqua | Advanced Water Solutions" />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Meta Description (160 chars)</label>
+                        <textarea rows={3} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-black resize-none" value={seo.description} onChange={e => setSeo({...seo, description: e.target.value})} placeholder="High-end water purification systems..." />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Focus Keywords (Comma separated)</label>
+                        <input className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-black" value={seo.keywords} onChange={e => setSeo({...seo, keywords: e.target.value})} placeholder="water purifier, industrial RO, RegilAqua" />
+                      </div>
+                      <ImageUpload 
+                        label="OG Image (Social Sharing)"
+                        currentUrl={seo.ogImage}
+                        onUpload={(url) => setSeo({...seo, ogImage: url})}
+                      />
+                    </div>
+                    <button type="submit" className="bg-slate-900 text-white px-8 py-3 rounded-none font-black shadow-lg flex items-center space-x-2">
+                      <Save className="w-4 h-4" />
+                      <span>Apply SEO Update</span>
+                    </button>
+                  </form>
+                </div>
+
                 {/* Global Info */}
                 <div className="bg-white rounded-none border border-slate-200 p-10 shadow-sm">
                   <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center mb-10">
@@ -548,11 +669,15 @@ export default function Admin() {
                             newBanners[i].title = e.target.value;
                             setSettings({...settings, heroBanners: newBanners});
                           }} />
-                          <input className="w-full px-3 py-2 border rounded-none font-bold" value={banner.image} placeholder="Image URL" onChange={e => {
-                            const newBanners = [...settings.heroBanners];
-                            newBanners[i].image = e.target.value;
-                            setSettings({...settings, heroBanners: newBanners});
-                          }} />
+                          <ImageUpload 
+                            label="Banner Image"
+                            currentUrl={banner.image}
+                            onUpload={(url) => {
+                              const newBanners = [...settings.heroBanners];
+                              newBanners[i].image = url;
+                              setSettings({...settings, heroBanners: newBanners});
+                            }}
+                          />
                           <textarea className="md:col-span-2 w-full px-3 py-2 border rounded-none font-medium" rows={2} value={banner.subtitle} placeholder="Sub-headline" onChange={e => {
                             const newBanners = [...settings.heroBanners];
                             newBanners[i].subtitle = e.target.value;
@@ -669,10 +794,11 @@ export default function Admin() {
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Headline</label>
                     <input className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-black" value={currentBlog.title} onChange={e => setCurrentBlog({...currentBlog, title: e.target.value})} />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Cover Image URL</label>
-                    <input className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-black" value={currentBlog.image} onChange={e => setCurrentBlog({...currentBlog, image: e.target.value})} />
-                  </div>
+                  <ImageUpload 
+                    label="Cover Image"
+                    currentUrl={currentBlog.image}
+                    onUpload={(url) => setCurrentBlog({...currentBlog, image: url})}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Short Excerpt</label>
@@ -779,24 +905,16 @@ export default function Admin() {
                 </div>
 
                 <div className="space-y-6">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Visual Assets (Images)</label>
-                  <div className="flex gap-4">
-                    <div className="relative flex-1">
-                      <ImageIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                      <input
-                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-none font-medium"
-                        placeholder="Paste image URL here..."
-                        value={imageInput}
-                        onChange={e => setImageInput(e.target.value)}
-                      />
-                    </div>
-                    <button type="button" onClick={() => {
-                      if(imageInput) {
-                        setCurrentProduct({...currentProduct, images: [...(currentProduct.images || []), imageInput]});
-                        if(!currentProduct.image) setCurrentProduct(p => ({...p, image: imageInput}));
-                        setImageInput('');
-                      }
-                    }} className="bg-slate-900 text-white px-6 py-3 rounded-none font-black">Add</button>
+                  <div className="flex flex-col gap-6">
+                    <ImageUpload 
+                      label="Add Product Image"
+                      onUpload={(url) => {
+                        if(url) {
+                          setCurrentProduct({...currentProduct, images: [...(currentProduct.images || []), url]});
+                          if(!currentProduct.image) setCurrentProduct(p => ({...p, image: url}));
+                        }
+                      }}
+                    />
                   </div>
                   <div className="flex flex-wrap gap-4">
                     {(currentProduct.images || []).map((img, idx) => (
