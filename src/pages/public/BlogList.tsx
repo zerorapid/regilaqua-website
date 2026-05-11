@@ -10,7 +10,15 @@ export default function BlogList() {
   const [blogs, setBlogs] = React.useState<Blog[]>([]);
 
   React.useEffect(() => {
-    setBlogs(blogService.getBlogs());
+    const loadBlogs = async () => {
+      try {
+        const data = await blogService.getBlogs();
+        setBlogs(data);
+      } catch (error) {
+        console.error('Error loading blogs:', error);
+      }
+    };
+    loadBlogs();
   }, []);
 
   return (

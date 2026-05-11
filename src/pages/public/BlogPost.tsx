@@ -13,11 +13,19 @@ export default function BlogPost() {
   const [blog, setBlog] = React.useState<Blog | null>(null);
 
   React.useEffect(() => {
-    if (id) {
-      const b = blogService.getBlogById(id);
-      if (b) setBlog(b);
-      else navigate('/blog');
-    }
+    const loadBlog = async () => {
+      if (id) {
+        try {
+          const b = await blogService.getBlogById(id);
+          if (b) setBlog(b);
+          else navigate('/blog');
+        } catch (error) {
+          console.error('Error loading blog:', error);
+          navigate('/blog');
+        }
+      }
+    };
+    loadBlog();
   }, [id, navigate]);
 
   if (!blog) return null;

@@ -30,15 +30,23 @@ export default function ProductDetail() {
   const settings = settingsService.getSettings();
 
   React.useEffect(() => {
-    if (id) {
-      const p = productService.getProductById(id);
-      if (p) {
-        setProduct(p);
-        setCurrentImageIndex(0);
-      } else {
-        navigate('/products');
+    const loadProduct = async () => {
+      if (id) {
+        try {
+          const p = await productService.getProductById(id);
+          if (p) {
+            setProduct(p);
+            setCurrentImageIndex(0);
+          } else {
+            navigate('/products');
+          }
+        } catch (error) {
+          console.error('Error loading product:', error);
+          navigate('/products');
+        }
       }
-    }
+    };
+    loadProduct();
   }, [id, navigate]);
 
   if (!product) return null;

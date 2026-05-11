@@ -35,7 +35,14 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+import { settingsService } from './services/settingsService';
+
 export default function App() {
+  React.useEffect(() => {
+    // Initial fetch of settings from Supabase
+    settingsService.fetchSettings().catch(console.error);
+  }, []);
+
   return (
     <HelmetProvider>
       <Router>

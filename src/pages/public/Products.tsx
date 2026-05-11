@@ -17,7 +17,15 @@ export default function Products() {
   const [products, setProducts] = React.useState<Product[]>([]);
 
   React.useEffect(() => {
-    setProducts(productService.getProducts());
+    const loadProducts = async () => {
+      try {
+        const data = await productService.getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error('Failed to load products:', error);
+      }
+    };
+    loadProducts();
   }, []);
 
   const settings = settingsService.getSettings();

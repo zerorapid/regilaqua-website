@@ -174,8 +174,13 @@ export default function Admin() {
 
   const handleSettingsSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    // settingsService.saveSettings(settings); // This one might still be sync or handled differently
-    showToast('Settings saved successfully');
+    try {
+      await settingsService.saveSettings(settings);
+      showToast('Settings saved successfully');
+    } catch (error) {
+      console.error(error);
+      showToast('Failed to save settings');
+    }
   };
 
   const handleSEOSave = async (e: React.FormEvent) => {
@@ -235,7 +240,7 @@ export default function Admin() {
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Identity</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@regilaqua.com" />
+                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@regilaqua.in" />
               </div>
             </div>
             <div className="space-y-2">
