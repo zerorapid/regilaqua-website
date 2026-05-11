@@ -229,7 +229,10 @@ export default function Admin() {
           </div>
           <form className="space-y-6" onSubmit={(e) => {
             e.preventDefault();
-            if (loginEmail === import.meta.env.VITE_ADMIN_USER && loginPass === import.meta.env.VITE_ADMIN_PASS) {
+            const adminUser = import.meta.env.VITE_ADMIN_USER || 'admin@regilaqua.in';
+            const adminPass = import.meta.env.VITE_ADMIN_PASS || 'Admin123!';
+            
+            if (loginEmail === adminUser && loginPass === adminPass) {
               setIsAuthenticated(true);
               localStorage.setItem('regilaqua_admin_auth', 'true');
             } else {
