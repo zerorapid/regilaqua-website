@@ -11,6 +11,10 @@
       "destination": "/admin.html"
     },
     {
+      "source": "/manage/:path*",
+      "destination": "/admin.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
