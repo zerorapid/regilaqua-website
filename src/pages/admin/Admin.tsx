@@ -25,8 +25,10 @@ import {
   ChevronRight,
   ShieldCheck,
   Search,
-  Lock
+  Lock,
+  LogOut
 } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import { blogService } from '../../services/blogService';
 import { productService } from '../../services/productService';
 import { settingsService, SiteSettings, HeroBanner, Testimonial, FAQ, SEOSettings } from '../../services/settingsService';
@@ -79,17 +81,32 @@ export default function Admin() {
     ogImage: ''
   });
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [user, setUser] = React.useState<any>(null);
   const [loginEmail, setLoginEmail] = React.useState('');
   const [loginPass, setLoginPass] = React.useState('');
 
+  const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
-    const auth = localStorage.getItem('regilaqua_admin_auth');
-    if (auth === 'true') setIsAuthenticated(true);
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+      setUser(session?.user || null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+      setUser(session?.user || null);
+    });
     
     loadProducts();
     loadInquiries();
     loadBlogs();
     loadSEO();
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const loadProducts = async () => {
@@ -227,35 +244,39 @@ export default function Admin() {
             <Logo className="h-10 w-auto mb-6" />
             <h1 className="text-xl font-black uppercase tracking-widest text-slate-900">Admin Control</h1>
           </div>
-          <form className="space-y-6" onSubmit={(e) => {
+          <form className="space-y-6" onSubmit={async (e) => {
             e.preventDefault();
-            const adminUser = import.meta.env.VITE_ADMIN_USER || 'admin@regilaqua.in';
-            const adminPass = import.meta.env.VITE_ADMIN_PASS || 'Admin123!';
+            setLoading(true);
+            const { error } = await supabase.auth.signInWithPassword({
+              email: loginEmail,
+              password: loginPass,
+            });
             
-            if (loginEmail === adminUser && loginPass === adminPass) {
-              setIsAuthenticated(true);
-              localStorage.setItem('regilaqua_admin_auth', 'true');
-            } else {
-              alert('Invalid Credentials');
+            if (error) {
+              alert(`LOGIN FAILED:\nMessage: ${error.message}\nStatus: ${error.status}\n\nHint: If you are on the live site, ensure Vercel Environment Variables are set.`);
             }
+            setLoading(false);
           }}>
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Identity</label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@regilaqua.in" />
+                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} placeholder="admin@regilaqua.in" required />
               </div>
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Access Key</label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="password" value={loginPass} onChange={e => setLoginPass(e.target.value)} placeholder="••••••••" />
+                <input className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 font-black" type="password" value={loginPass} onChange={e => setLoginPass(e.target.value)} placeholder="••••••••" required />
               </div>
             </div>
-            <button className="w-full bg-regil-blue text-white py-4 font-black uppercase tracking-widest shadow-xl shadow-regil-blue/20 hover:scale-[1.02] transition-transform flex items-center justify-center space-x-2">
+            <button 
+              disabled={loading}
+              className="w-full bg-regil-blue text-white py-4 font-black uppercase tracking-widest shadow-xl shadow-regil-blue/20 hover:scale-[1.02] transition-transform flex items-center justify-center space-x-2 disabled:opacity-50"
+            >
               <ShieldCheck className="w-5 h-5" />
-              <span>Unlock Dashboard</span>
+              <span>{loading ? 'Authenticating...' : 'Unlock Dashboard'}</span>
             </button>
           </form>
         </motion.div>
@@ -319,19 +340,18 @@ export default function Admin() {
               <Settings className="w-4 h-4" />
               <span>Settings</span>
             </button>
-            <a 
-              href="/"
-              target="_blank"
-              className="flex items-center space-x-3 w-full text-left px-4 py-3 text-slate-400 hover:text-white transition-colors text-sm font-black"
+            <button 
+              onClick={() => supabase.auth.signOut()}
+              className="flex items-center space-x-3 w-full text-left px-4 py-3 text-red-400 hover:text-red-500 transition-colors text-sm font-black mt-10 border border-red-400/20"
             >
-              <Eye className="w-4 h-4" />
-              <span>Public View</span>
-            </a>
+              <LogOut className="w-4 h-4" />
+              <span>Sign Out</span>
+            </button>
           </nav>
         </div>
         <div className="mt-auto p-8 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Logged in as</p>
-          <p className="text-sm font-bold text-white">RegilAqua Owner</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Secure Session</p>
+          <p className="text-sm font-bold text-white truncate">{user?.email || 'RegilAqua Admin'}</p>
         </div>
       </div>
 
