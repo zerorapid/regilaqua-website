@@ -28,6 +28,14 @@ export interface SEOSettings {
   ogImage: string;
 }
 
+export interface FeaturedCollection {
+  id: string;
+  title: string;
+  badge: string;
+  desc: string;
+  image: string;
+}
+
 export interface SiteSettings {
   email: string;
   whatsappNumber: string;
@@ -36,6 +44,8 @@ export interface SiteSettings {
   heroBanners: HeroBanner[];
   testimonials: Testimonial[];
   faqs: FAQ[];
+  bentoImage: string;
+  featuredCollections: FeaturedCollection[];
 }
 
 const STORAGE_KEY = 'regilaqua_site_settings';
@@ -45,6 +55,12 @@ const DEFAULT_SETTINGS: SiteSettings = {
   whatsappNumber: '919000000000',
   address: 'RegilAqua Industrial Zone, Guntur, Andhra Pradesh',
   productCategories: ['Domestic', 'Commercial', 'Industrial', 'Water ATM', 'Components'],
+  bentoImage: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200',
+  featuredCollections: [
+    { id: '1', title: 'Water ATM Ecosystem', badge: 'Hot Seller', desc: 'Automated vending with RFID and Coin support.', image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=800' },
+    { id: '2', title: 'Industrial RO Series', badge: 'Expert Choice', desc: '250 LPH to 1000 LPH High-pressure systems.', image: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=800' },
+    { id: '3', title: 'Genuine Components', badge: 'In Stock', desc: 'Membranes, Filters, and Media for all brands.', image: 'https://images.unsplash.com/photo-1585837509811-362bb20d663b?auto=format&fit=crop&q=80&w=800' },
+  ],
   heroBanners: [
     {
       id: '1',

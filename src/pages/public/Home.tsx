@@ -32,7 +32,12 @@ export default function Home() {
   const [isContactOpen, setIsContactOpen] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<string | undefined>();
   const [currentBanner, setCurrentBanner] = React.useState(0);
-  const settings = settingsService.getSettings();
+  const [settings, setSettings] = React.useState(settingsService.getSettings());
+
+  // Always fetch fresh from Supabase on load so admin changes reflect immediately
+  React.useEffect(() => {
+    settingsService.fetchSettings().then(setSettings).catch(() => {});
+  }, []);
 
   const openContact = (product?: string) => {
     setSelectedProduct(product);
@@ -228,7 +233,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="md:col-span-2 md:row-span-2 bg-slate-100 rounded-none p-12 overflow-hidden relative group">
             <img 
-                src="https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200" 
+                src={settings.bentoImage || 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200'} 
                 className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-110 transition-transform duration-700" 
                 alt="RO Plant"
                 loading="lazy"
@@ -292,28 +297,13 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Water ATM Ecosystem',
-                img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=800',
-                badge: 'Hot Seller',
-                desc: 'Automated vending with RFID and Coin support.'
-              },
-              {
-                title: 'Industrial RO Series',
-                img: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=800',
-                badge: 'Expert Choice',
-                desc: '250 LPH to 1000 LPH High-pressure systems.'
-              },
-              {
-                title: 'Genuine Components',
-                img: 'https://images.unsplash.com/photo-1585837509811-362bb20d663b?auto=format&fit=crop&q=80&w=800',
-                badge: 'In Stock',
-                desc: 'Membranes, Filters, and Media for all brands.'
-              }
-            ].map((col, idx) => (
-              <Link to="/products" key={idx} className="group relative rounded-none overflow-hidden aspect-[4/5] bg-slate-900 border border-slate-100 shadow-xl shadow-slate-200/50">
-                <img src={col.img} alt={col.title} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 group-hover:opacity-40 transition-all duration-700" loading="lazy" />
+            {(settings.featuredCollections?.length > 0 ? settings.featuredCollections : [
+              { id: '1', title: 'Water ATM Ecosystem', badge: 'Hot Seller', desc: 'Automated vending with RFID and Coin support.', image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=800' },
+              { id: '2', title: 'Industrial RO Series', badge: 'Expert Choice', desc: '250 LPH to 1000 LPH High-pressure systems.', image: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=800' },
+              { id: '3', title: 'Genuine Components', badge: 'In Stock', desc: 'Membranes, Filters, and Media for all brands.', image: 'https://images.unsplash.com/photo-1585837509811-362bb20d663b?auto=format&fit=crop&q=80&w=800' },
+            ]).map((col, idx) => (
+              <Link to="/products" key={col.id || idx} className="group relative rounded-none overflow-hidden aspect-[4/5] bg-slate-900 border border-slate-100 shadow-xl shadow-slate-200/50">
+                <img src={col.image} alt={col.title} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 group-hover:opacity-40 transition-all duration-700" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
                 <div className="absolute bottom-10 left-10 right-10">
                   <span className="inline-block px-3 py-1 bg-regil-blue text-[10px] font-black text-white uppercase tracking-wider rounded-none mb-4">

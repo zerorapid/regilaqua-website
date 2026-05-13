@@ -31,7 +31,7 @@ import {
 import { supabase } from '../../lib/supabase';
 import { blogService } from '../../services/blogService';
 import { productService } from '../../services/productService';
-import { settingsService, SiteSettings, HeroBanner, Testimonial, FAQ, SEOSettings } from '../../services/settingsService';
+import { settingsService, SiteSettings, HeroBanner, Testimonial, FAQ, SEOSettings, FeaturedCollection } from '../../services/settingsService';
 import { inquiryService, Inquiry } from '../../services/inquiryService';
 import { Product, Category, Blog } from '../../types';
 import Markdown from 'react-markdown';
@@ -712,6 +712,69 @@ export default function Admin() {
                             setSettings({...settings, heroBanners: newBanners});
                           }} />
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bento Section Image */}
+                <div className="bg-white rounded-none border border-slate-200 p-10 shadow-sm">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center mb-10">
+                    <ImageIcon className="w-5 h-5 mr-3 text-regil-blue" /> Core Section Background Image
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium mb-6">This image appears in the "The Core of RegilAqua" bento grid section on the home page.</p>
+                  <ImageUpload
+                    label="Bento Background Image"
+                    currentUrl={settings.bentoImage}
+                    onUpload={(url) => setSettings({ ...settings, bentoImage: url })}
+                  />
+                </div>
+
+                {/* Featured Collections */}
+                <div className="bg-white rounded-none border border-slate-200 p-10 shadow-sm">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center mb-10">
+                    <ImageIcon className="w-5 h-5 mr-3 text-regil-blue" /> Featured Collections (Home Page Cards)
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium mb-6">The 3 product collection cards shown in the "Built for Performance" section on the home page.</p>
+                  <div className="space-y-6">
+                    {(settings.featuredCollections || []).map((col, i) => (
+                      <div key={col.id} className="p-6 bg-slate-50 rounded-none border border-slate-200">
+                        <p className="text-[10px] font-black text-regil-blue uppercase tracking-widest mb-4">Card {i + 1}</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Title</label>
+                            <input className="w-full px-3 py-2 border border-slate-200 rounded-none font-bold" value={col.title} placeholder="Card Title" onChange={e => {
+                              const updated = [...settings.featuredCollections];
+                              updated[i] = { ...updated[i], title: e.target.value };
+                              setSettings({ ...settings, featuredCollections: updated });
+                            }} />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Badge Label</label>
+                            <input className="w-full px-3 py-2 border border-slate-200 rounded-none font-bold" value={col.badge} placeholder="e.g. Hot Seller" onChange={e => {
+                              const updated = [...settings.featuredCollections];
+                              updated[i] = { ...updated[i], badge: e.target.value };
+                              setSettings({ ...settings, featuredCollections: updated });
+                            }} />
+                          </div>
+                          <div className="md:col-span-2 space-y-2">
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Description</label>
+                            <input className="w-full px-3 py-2 border border-slate-200 rounded-none font-medium" value={col.desc} placeholder="Short description" onChange={e => {
+                              const updated = [...settings.featuredCollections];
+                              updated[i] = { ...updated[i], desc: e.target.value };
+                              setSettings({ ...settings, featuredCollections: updated });
+                            }} />
+                          </div>
+                        </div>
+                        <ImageUpload
+                          label="Card Image"
+                          currentUrl={col.image}
+                          onUpload={(url) => {
+                            const updated = [...settings.featuredCollections];
+                            updated[i] = { ...updated[i], image: url };
+                            setSettings({ ...settings, featuredCollections: updated });
+                          }}
+                        />
                       </div>
                     ))}
                   </div>
