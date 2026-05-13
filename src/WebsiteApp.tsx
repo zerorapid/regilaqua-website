@@ -10,8 +10,6 @@ import BlogPost from './pages/public/BlogPost';
 import Contact from './pages/public/Contact';
 import PrivacyPolicy from './pages/public/PrivacyPolicy';
 import Terms from './pages/public/Terms';
-import Services from './pages/public/Services';
-import Projects from './pages/public/Projects';
 import FAQ from './pages/public/FAQ';
 import NotFound from './pages/public/NotFound';
 import { AnimatePresence, motion } from 'motion/react';
@@ -52,8 +50,6 @@ export default function WebsiteApp() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<Terms />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/projects" element={<Projects />} />
             <Route path="/faqs" element={<FAQ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
