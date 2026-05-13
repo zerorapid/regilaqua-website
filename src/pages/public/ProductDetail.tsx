@@ -17,7 +17,6 @@ import {
   ClipboardList
 } from 'lucide-react';
 import { productService } from '../../services/productService';
-import { settingsService } from '../../services/settingsService';
 import { Product } from '../../types';
 import { cn } from '../../lib/utils';
 import SEO from '../../components/SEO';
