@@ -198,20 +198,103 @@ export default function Home() {
                 desc: 'Real-time monitoring and 24/7 service visits to ensure zero downtime.'
               }
             ].map((item, idx) => (
-              <div key={idx} className="bg-white p-12 hover:bg-regil-indigo group transition-all duration-500">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="w-16 h-16 bg-regil-sky/10 rounded-none flex items-center justify-center text-regil-blue group-hover:bg-white/20 group-hover:text-white transition-colors">
-                    {item.icon}
-                  </div>
-                  <span className="text-5xl font-black text-slate-100 group-hover:text-white/10 transition-colors">
-                    {item.step}
-                  </span>
-                </div>
-                <h4 className="text-xl font-black text-slate-900 mb-4 group-hover:text-white transition-colors tracking-tight">{item.title}</h4>
-                <p className="text-slate-500 text-sm leading-relaxed group-hover:text-regil-light transition-colors font-medium">
-                  {item.desc}
-                </p>
+              <div key={idx} className="group p-10 bg-white border border-transparent hover:border-slate-200 transition-all hover:shadow-2xl">
+                <div className="text-regil-blue mb-8 group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
+                <div className="text-4xl font-black text-slate-100 mb-6 group-hover:text-regil-sky/20 transition-colors">{item.step}</div>
+                <h4 className="text-xl font-black text-slate-900 mb-4">{item.title}</h4>
+                <p className="text-slate-500 font-medium leading-relaxed text-sm">{item.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Summary Section */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="relative">
+              <img 
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
+                alt="Our Facility" 
+                className="w-full aspect-square object-cover rounded-none shadow-2xl relative z-10"
+              />
+              <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-regil-blue z-0 hidden lg:block" />
+              <div className="absolute top-10 left-10 p-8 bg-white shadow-2xl z-20 hidden lg:block">
+                <div className="text-4xl font-black text-regil-blue mb-1">15+</div>
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Years of Expertise</div>
+              </div>
+            </div>
+            <div>
+              <span className="text-regil-blue font-black uppercase tracking-widest text-[10px] mb-4 inline-block">The RigelAqua Story</span>
+              <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter">Global Technology. <br/>Local Heart.</h2>
+              <p className="text-lg text-slate-600 font-medium mb-8 leading-relaxed">
+                Founded in Andhra Pradesh, we bridged the gap between international water purification standards and local community needs. We don't just sell filters; we engineer trust.
+              </p>
+              <div className="space-y-4 mb-10">
+                {['Direct International Sourcing', 'Customized TDS Calibration', '24/7 AP-Wide Service Network'].map((item) => (
+                  <div key={item} className="flex items-center space-x-3 text-slate-900 font-black text-sm uppercase tracking-tight">
+                    <CheckCircle2 className="w-5 h-5 text-regil-green" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <Link to="/about" className="inline-flex items-center space-x-2 text-regil-blue font-black uppercase tracking-widest text-xs hover:translate-x-2 transition-transform">
+                <span>Learn more about our journey</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+            <div>
+              <h2 className="text-regil-orange font-black uppercase tracking-widest text-xs mb-4">Precision Engineering</h2>
+              <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Featured Solutions</h3>
+            </div>
+            <Link to="/products" className="bg-slate-900 text-white px-8 py-4 rounded-none font-black uppercase tracking-widest text-xs hover:bg-regil-blue transition-colors shadow-xl">
+              View Entire Catalog
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              {
+                id: 'water-atm',
+                name: 'Smart Water ATM Kiosk',
+                category: 'Water ATM',
+                image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=800',
+                desc: 'RFID and Coin operated automated vending with GSM monitoring.'
+              },
+              {
+                id: 'industrial-ro',
+                name: 'Industrial RO - 500 LPH',
+                category: 'Industrial',
+                image: 'https://images.unsplash.com/photo-1581093577421-f561a654a353?auto=format&fit=crop&q=80&w=800',
+                desc: 'Heavy-duty purification for factories and large offices.'
+              },
+              {
+                id: 'components',
+                name: 'High-Pressure Pumps',
+                category: 'Components',
+                image: 'https://images.unsplash.com/photo-1585837509811-362bb20d663b?auto=format&fit=crop&q=80&w=800',
+                desc: 'Tier-1 imported pumps for maximum system longevity.'
+              }
+            ].map((p) => (
+              <Link key={p.id} to="/products" className="group">
+                <div className="aspect-[4/5] overflow-hidden bg-slate-100 mb-6 rounded-none relative">
+                  <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-black uppercase tracking-widest text-regil-blue border border-slate-200">
+                    {p.category}
+                  </div>
+                </div>
+                <h4 className="text-xl font-black text-slate-900 mb-2 group-hover:text-regil-blue transition-colors">{p.name}</h4>
+                <p className="text-slate-500 font-medium text-sm leading-relaxed line-clamp-2">{p.desc}</p>
+              </Link>
             ))}
           </div>
         </div>

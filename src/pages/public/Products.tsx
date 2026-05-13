@@ -9,6 +9,7 @@ import { Category, Product } from '../../types';
 import { cn } from '../../lib/utils';
 import { Search, SlidersHorizontal } from 'lucide-react';
 import SEO from '../../components/SEO';
+import { useSettings } from '../../context/SettingsContext';
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();

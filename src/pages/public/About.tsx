@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Globe, ShieldCheck, Truck, Clock, Eye, Target, Users, Star, Quote } from 'lucide-react';
 import { settingsService } from '../../services/settingsService';
 import SEO from '../../components/SEO';
+import { useSettings } from '../../context/SettingsContext';
 
 export default function About() {
   const { settings } = useSettings();
