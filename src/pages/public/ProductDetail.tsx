@@ -27,11 +27,13 @@ export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [product, setProduct] = React.useState<Product | null>(null);
+  const [loading, setLoading] = React.useState(true);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const { settings } = useSettings();
 
   React.useEffect(() => {
     const loadProduct = async () => {
+      setLoading(true);
       if (id) {
         try {
           const p = await productService.getProductById(id);
@@ -39,28 +41,44 @@ export default function ProductDetail() {
             setProduct(p);
             setCurrentImageIndex(0);
           } else {
+            console.warn('Product not found, redirecting...');
             navigate('/products');
           }
         } catch (error) {
           console.error('Error loading product:', error);
           navigate('/products');
+        } finally {
+          setLoading(false);
         }
       }
     };
     loadProduct();
   }, [id, navigate]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-12 h-12 border-4 border-regil-blue border-t-transparent animate-spin rounded-full" />
+          <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Loading Quality...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!product) return null;
 
-  const images = product.images && product.images.length > 0 ? product.images : [product.image];
-  const whatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=Hi, I'm interested in the ${product.name}. Please share more details.`;
+  const images = (product.images && product.images.length > 0) ? product.images : [product.image];
+  const specs = product.specs || [];
+  const features = product.features || [];
+  const whatsappUrl = `https://wa.me/${settings?.whatsappNumber || ''}?text=Hi, I'm interested in the ${product.name}. Please share more details.`;
 
   return (
     <div className="min-h-screen bg-slate-50 pt-32 pb-20">
       <SEO 
         title={product.name} 
-        description={product.description}
-        image={product.image}
+        description={product.description || ''}
+        image={product.image || ''}
         type="product"
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,9 +153,9 @@ export default function ProductDetail() {
                 {product.description}
               </p>
 
-              {(product.features && product.features.length > 0) && (
+              {(features && features.length > 0) && (
                 <div className="grid grid-cols-2 gap-4 mb-10 bg-slate-50 p-6 rounded-none border border-slate-100">
-                  {product.features.map((feat, i) => (
+                  {features.map((feat, i) => (
                     <div key={i}>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{feat.label}</p>
                       <p className="font-black text-slate-900">{feat.value}</p>
@@ -172,7 +190,7 @@ export default function ProductDetail() {
                   <ClipboardList className="w-5 h-5 mr-2 text-regil-blue" /> Machine Specs
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6">
-                  {product.specs.map((spec, i) => (
+                  {specs.map((spec, i) => (
                     <div key={i} className="flex items-start space-x-2">
                       <CheckCircle2 className="w-4 h-4 text-regil-green mt-0.5" />
                       <span className="text-sm font-bold text-slate-600">{spec}</span>
