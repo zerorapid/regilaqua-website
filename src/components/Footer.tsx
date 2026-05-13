@@ -42,6 +42,7 @@ export default function Footer() {
               <li><Link to="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
               <li><Link to="/products" className="hover:text-blue-400 transition-colors">Products</Link></li>
               <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -81,8 +82,8 @@ export default function Footer() {
             © {new Date().getFullYear()} RegilAqua. All rights reserved.
           </p>
           <div className="flex items-center space-x-6">
-            <a href="#" className="text-slate-500 hover:text-white transition-colors font-medium">Privacy Policy</a>
-            <a href="#" className="text-slate-500 hover:text-white transition-colors font-medium">Terms of Service</a>
+            <Link to="/privacy" className="text-slate-500 hover:text-white transition-colors font-medium">Privacy Policy</Link>
+            <Link to="/terms" className="text-slate-500 hover:text-white transition-colors font-medium">Terms of Service</Link>
           </div>
         </div>
       </div>

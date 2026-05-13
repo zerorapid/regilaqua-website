@@ -7,6 +7,9 @@ import Products from './pages/public/Products';
 import ProductDetail from './pages/public/ProductDetail';
 import BlogList from './pages/public/BlogList';
 import BlogPost from './pages/public/BlogPost';
+import Contact from './pages/public/Contact';
+import PrivacyPolicy from './pages/public/PrivacyPolicy';
+import Terms from './pages/public/Terms';
 import { AnimatePresence, motion } from 'motion/react';
 import React from 'react';
 import { SettingsProvider } from './context/SettingsContext';
@@ -42,6 +45,9 @@ export default function WebsiteApp() {
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </PageWrapper>
