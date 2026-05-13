@@ -21,6 +21,7 @@ import { settingsService } from '../../services/settingsService';
 import { Product } from '../../types';
 import { cn } from '../../lib/utils';
 import SEO from '../../components/SEO';
+import { useSettings } from '../../context/SettingsContext';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
