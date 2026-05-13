@@ -27,7 +27,7 @@ export default function ProductDetail() {
   const navigate = useNavigate();
   const [product, setProduct] = React.useState<Product | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
 
   React.useEffect(() => {
     const loadProduct = async () => {

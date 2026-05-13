@@ -2,10 +2,10 @@ import React from 'react';
 import { Droplets, Mail, Phone, MapPin, Smartphone as WhatsApp, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
-import { settingsService } from '../services/settingsService';
+import { useSettings } from '../context/SettingsContext';
 
 export default function Footer() {
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
   return (
     <footer className="bg-slate-900 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

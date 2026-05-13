@@ -24,7 +24,7 @@ import {
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import ContactForm from '../../components/ContactForm';
-import { settingsService } from '../../services/settingsService';
+import { useSettings } from '../../context/SettingsContext';
 import SEO from '../../components/SEO';
 
 export default function Home() {
@@ -32,12 +32,7 @@ export default function Home() {
   const [isContactOpen, setIsContactOpen] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState<string | undefined>();
   const [currentBanner, setCurrentBanner] = React.useState(0);
-  const [settings, setSettings] = React.useState(settingsService.getSettings());
-
-  // Always fetch fresh from Supabase on load so admin changes reflect immediately
-  React.useEffect(() => {
-    settingsService.fetchSettings().then(setSettings).catch(() => {});
-  }, []);
+  const { settings } = useSettings();
 
   const openContact = (product?: string) => {
     setSelectedProduct(product);

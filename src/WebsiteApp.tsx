@@ -9,6 +9,7 @@ import BlogList from './pages/public/BlogList';
 import BlogPost from './pages/public/BlogPost';
 import { AnimatePresence, motion } from 'motion/react';
 import React from 'react';
+import { SettingsProvider } from './context/SettingsContext';
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -30,21 +31,22 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
 
 export default function WebsiteApp() {
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-700">
-      <Navbar />
-      <PageWrapper>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/blog" element={<BlogList />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-          {/* Redirect any other admin-like attempts to home or 404 */}
-          <Route path="*" element={<Home />} />
-        </Routes>
-      </PageWrapper>
-      <Footer />
-    </div>
+    <SettingsProvider>
+      <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-700">
+        <Navbar />
+        <PageWrapper>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </PageWrapper>
+        <Footer />
+      </div>
+    </SettingsProvider>
   );
 }

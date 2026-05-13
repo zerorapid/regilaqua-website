@@ -4,11 +4,11 @@ import { Menu, X, Smartphone as WhatsApp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import Logo from './Logo';
-import { settingsService } from '../services/settingsService';
+import { useSettings } from '../context/SettingsContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
 
   const navItems = [
     { name: 'Home', path: '/' },

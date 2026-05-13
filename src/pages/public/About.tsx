@@ -5,7 +5,7 @@ import { settingsService } from '../../services/settingsService';
 import SEO from '../../components/SEO';
 
 export default function About() {
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
   
   const testimonials = settings.testimonials.length > 0 ? settings.testimonials : [
     { name: "Ramakrishna V.", role: "Plant Operator (Guntur)", content: "The Water ATM systems from RegilAqua are rugged. The card sync is perfect and local service is just a phone call away.", rating: 5 },

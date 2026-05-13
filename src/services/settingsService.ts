@@ -48,12 +48,11 @@ export interface SiteSettings {
   featuredCollections: FeaturedCollection[];
 }
 
-const STORAGE_KEY = 'regilaqua_site_settings';
-
-const DEFAULT_SETTINGS: SiteSettings = {
-  email: 'info@regilaqua.in',
+// ─── Default fallback (shown only when Supabase is unreachable) ─────────────
+export const DEFAULT_SETTINGS: SiteSettings = {
+  email: 'info@rigelaqua.in',
   whatsappNumber: '919000000000',
-  address: 'RegilAqua Industrial Zone, Guntur, Andhra Pradesh',
+  address: 'RigelAqua Industrial Zone, Guntur, Andhra Pradesh',
   productCategories: ['Domestic', 'Commercial', 'Industrial', 'Water ATM', 'Components'],
   bentoImage: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200',
   featuredCollections: [
@@ -70,83 +69,72 @@ const DEFAULT_SETTINGS: SiteSettings = {
     }
   ],
   testimonials: [
-    { id: '1', name: "Ramakrishna V.", role: "Plant Operator (Guntur)", content: "The Water ATM systems from RegilAqua are rugged. The card sync is perfect and local service is just a phone call away.", rating: 5 },
+    { id: '1', name: "Ramakrishna V.", role: "Plant Operator (Guntur)", content: "The Water ATM systems from RigelAqua are rugged. The card sync is perfect and local service is just a phone call away.", rating: 5 },
     { id: '2', name: "Anjali Devi", role: "School Administrator", content: "We installed the 50 LPH system for our primary wing. Water taste is excellent and maintenance is very low compared to our old unit.", rating: 5 },
     { id: '3', name: "Prasad Rao", role: "Industrial Manager", content: "The 500 LPH RO plant has been running 12 hours a day for a year. Not a single breakdown. Excellent component quality.", rating: 5 }
   ],
   faqs: [
     { id: '1', question: "What capacity RO plant do I need for a 100-person office?", answer: "For an office of 100 people, we typically recommend a 25 LPH or 50 LPH system with a storage tank of at least 50-100 liters to handle peak hours." },
-    { id: '2', question: "Do you provide installation in rural Andhra Pradesh?", answer: "Yes, RegilAqua has a dedicated network of technicians across all districts of AP, including rural areas and industrial zones." }
+    { id: '2', question: "Do you provide installation in rural Andhra Pradesh?", answer: "Yes, RigelAqua has a dedicated network of technicians across all districts of AP, including rural areas and industrial zones." }
   ]
 };
 
+// ─── All reads/writes go directly to Supabase — NO localStorage ────────────
 export const settingsService = {
-  getSettings: (): SiteSettings => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return DEFAULT_SETTINGS;
-    try {
-      return { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
-    } catch {
-      return DEFAULT_SETTINGS;
-    }
-  },
+  // Exposed so SettingsContext can use as initial state before fetch completes
+  DEFAULT_SETTINGS,
 
-  saveSettings: async (settings: SiteSettings): Promise<void> => {
-    // Save to localStorage for sync access
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-
-    // Save to Supabase
-    const { error } = await supabase
-      .from('settings')
-      .upsert({ key: 'site_settings', value: settings });
-    
-    if (error) throw error;
-  },
-
+  // Fetch site settings from Supabase (single source of truth)
   fetchSettings: async (): Promise<SiteSettings> => {
     const { data, error } = await supabase
       .from('settings')
       .select('value')
       .eq('key', 'site_settings')
       .single();
-    
-    if (error) {
-      console.warn('Error fetching site settings from Supabase, using local:', error);
-      return settingsService.getSettings();
+
+    if (error || !data?.value) {
+      console.warn('Settings not found in Supabase, using defaults.');
+      return DEFAULT_SETTINGS;
     }
 
-    if (data?.value) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data.value));
-      return data.value;
-    }
-
-    return settingsService.getSettings();
+    // Merge with defaults so new fields always exist even if DB row is old
+    return { ...DEFAULT_SETTINGS, ...data.value };
   },
 
+  // Save site settings to Supabase only
+  saveSettings: async (settings: SiteSettings): Promise<void> => {
+    const { error } = await supabase
+      .from('settings')
+      .upsert({ key: 'site_settings', value: settings });
+
+    if (error) throw error;
+  },
+
+  // Fetch SEO settings from Supabase
   getSEO: async (): Promise<SEOSettings> => {
     const { data, error } = await supabase
       .from('settings')
       .select('value')
       .eq('key', 'seo')
       .single();
-    
-    if (error) {
-      console.error('Error fetching SEO settings:', error);
+
+    if (error || !data?.value) {
       return {
-        title: 'RegilAqua | Advanced Water Solutions',
-        description: 'High-end water purification systems.',
-        keywords: 'water, purifier, RO',
+        title: 'RigelAqua | Advanced Water Solutions',
+        description: 'High-end water purification systems for domestic, commercial, and industrial use.',
+        keywords: 'water purifier, RO plant, industrial water, RigelAqua',
         ogImage: ''
       };
     }
     return data.value;
   },
 
+  // Save SEO settings to Supabase only
   updateSEO: async (seo: SEOSettings): Promise<void> => {
     const { error } = await supabase
       .from('settings')
       .upsert({ key: 'seo', value: seo });
-    
+
     if (error) throw error;
   }
 };

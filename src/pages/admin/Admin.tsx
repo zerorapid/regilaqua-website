@@ -72,7 +72,7 @@ export default function Admin() {
   const [categoryInput, setCategoryInput] = React.useState('');
   const [imageInput, setImageInput] = React.useState('');
   const [toast, setToast] = React.useState<string | null>(null);
-  const [settings, setSettings] = React.useState<SiteSettings>(settingsService.getSettings());
+  const [settings, setSettings] = React.useState<SiteSettings>(settingsService.DEFAULT_SETTINGS);
 
   const [seo, setSeo] = React.useState<SEOSettings>({
     title: '',

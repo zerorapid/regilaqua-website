@@ -28,7 +28,7 @@ export default function Products() {
     loadProducts();
   }, []);
 
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
   const categories: Category[] = ['All', ...settings.productCategories];
 
   const filteredProducts = products.filter(p => {

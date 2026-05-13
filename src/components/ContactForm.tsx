@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Send, Phone, Mail, User, MessageSquare } from 'lucide-react';
-import { settingsService } from '../services/settingsService';
+import { useSettings } from '../context/SettingsContext';
 import { inquiryService } from '../services/inquiryService';
 
 interface ContactFormProps {
@@ -11,7 +11,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ isOpen, onClose, productName }: ContactFormProps) {
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',

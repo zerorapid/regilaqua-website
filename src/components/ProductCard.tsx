@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import { Product } from '../types';
 import { cn } from '../lib/utils';
 
-import { settingsService } from '../services/settingsService';
+import { useSettings } from '../context/SettingsContext';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const settings = settingsService.getSettings();
+  const { settings } = useSettings();
   const whatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=Hi, I'm interested in the ${product.name} (${product.category})`;
 
   return (
