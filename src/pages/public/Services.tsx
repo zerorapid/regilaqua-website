@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ShieldCheck, Tool, Clock, Activity, CheckCircle2, ArrowRight, Zap, Droplets } from 'lucide-react';
+import { ShieldCheck, Wrench, Clock, Activity, CheckCircle2, ArrowRight, Zap, Droplets } from 'lucide-react';
 import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
@@ -79,7 +79,7 @@ export default function Services() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {[
                   { icon: <Droplets />, title: 'Water Analysis', desc: 'Full TDS, PH and chemical testing.' },
-                  { icon: <Tool />, title: 'Retrofitting', desc: 'Upgrade your old RO plants.' },
+                  { icon: <Wrench />, title: 'Retrofitting', desc: 'Upgrade your old RO plants.' },
                   { icon: <Zap />, title: 'Automation', desc: 'GSM and PLC integration.' },
                   { icon: <Clock />, title: '24h Support', desc: 'Dedicated emergency response.' }
                 ].map((cap, i) => (
