@@ -12,6 +12,9 @@
   --color-regil-green: #8fb742;
   --color-regil-navy: #484371;
   --color-regil-light: #b4d0e6;
+
+  /* Design Token — UI corner radius */
+  --radius-ui: 15px;
 }
 
 @layer base {
@@ -20,3 +23,12 @@
   }
 }
 
+/* ─── Global UI radius shift ──────────────────────────────────────────────────
+   All UI components (cards, buttons, inputs, modals, badges) use .rounded-none.
+   Full-width layout elements (sections, nav, footer, hero overlays) do NOT use
+   .rounded-none — they fill their containers naturally — so they are unaffected.
+   This is a single-token design shift with zero component code changes.
+────────────────────────────────────────────────────────────────────────────── */
+.rounded-none {
+  border-radius: var(--radius-ui) !important;
+}
