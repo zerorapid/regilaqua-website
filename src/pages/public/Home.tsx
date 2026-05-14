@@ -303,52 +303,52 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="md:col-span-2 md:row-span-2 bg-slate-100 rounded-none p-12 overflow-hidden relative group">
-            <img 
-                src={settings.bentoImage || 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200'} 
-                className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-110 transition-transform duration-700" 
-                alt="RO Plant"
-                loading="lazy"
-              />
+            <div className="md:col-span-2 md:row-span-2 bg-slate-50 rounded-none p-12 border border-slate-100 flex flex-col justify-center group relative overflow-hidden">
               <div className="relative z-10">
-                <Trophy className="w-12 h-12 text-regil-blue mb-6" />
-                <h4 className="text-3xl font-black text-slate-900 mb-4">High-Pressure Excellence</h4>
-                <p className="text-slate-600 font-medium leading-relaxed max-w-sm">
+                <Trophy className="w-16 h-16 text-regil-blue mb-8 group-hover:scale-110 transition-transform duration-500" />
+                <h4 className="text-3xl md:text-4xl font-black text-slate-900 mb-6 tracking-tighter">High-Pressure Excellence</h4>
+                <p className="text-slate-600 font-medium leading-relaxed max-w-sm mb-10 text-lg">
                   Utilizing Italian high-pressure pumps and Japanese membranes to ensure 99.9% salt rejection even at 5000+ TDS levels.
                 </p>
                 <button 
                   onClick={() => openContact("Industrial RO")}
-                  className="mt-8 px-8 py-3 bg-regil-blue text-white rounded-none font-black hover:bg-regil-blue/90 transition-all uppercase text-xs tracking-widest"
+                  className="px-10 py-4 bg-regil-blue text-white rounded-none font-black hover:bg-regil-blue/90 transition-all uppercase text-xs tracking-[0.2em] shadow-xl shadow-regil-blue/20"
                 >
                   Technical Specs
                 </button>
               </div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-regil-blue/5 -translate-y-1/2 translate-x-1/2 rounded-full blur-3xl group-hover:bg-regil-blue/10 transition-colors" />
             </div>
 
-            <div className="bg-regil-indigo rounded-none p-10 text-white flex flex-col justify-between group">
-              <Award className="w-10 h-10 text-regil-sky mb-6 group-hover:rotate-12 transition-transform" />
-              <div>
-                <h4 className="text-xl font-black mb-2">Grade A Material</h4>
-                <p className="text-regil-sky text-sm font-medium">Food-grade SS 316 / 304 vessels used in all our commercial plants.</p>
+            <div className="bg-regil-indigo rounded-none p-10 text-white flex flex-col justify-between group relative overflow-hidden">
+              <Award className="w-12 h-12 text-regil-sky mb-8 group-hover:rotate-12 transition-transform duration-500 relative z-10" />
+              <div className="relative z-10">
+                <h4 className="text-xl md:text-2xl font-black mb-3 tracking-tight">Grade A Material</h4>
+                <p className="text-regil-sky text-sm md:text-base font-medium leading-relaxed">Food-grade SS 316 / 304 vessels used in all our commercial plants.</p>
               </div>
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
             </div>
 
-            <div className="bg-regil-orange rounded-none p-10 text-white flex flex-col justify-between group">
-              <Zap className="w-10 h-10 text-white/50 mb-6 group-hover:-translate-y-2 transition-transform" />
-              <div>
-                <h4 className="text-xl font-black mb-2">Power Efficient</h4>
-                <p className="text-white/80 text-sm font-medium">Smart VFD drives that save up to 30% electricity consumption.</p>
+            <div className="bg-regil-orange rounded-none p-10 text-white flex flex-col justify-between group relative overflow-hidden">
+              <Zap className="w-12 h-12 text-white/50 mb-8 group-hover:-translate-y-2 transition-transform duration-500 relative z-10" />
+              <div className="relative z-10">
+                <h4 className="text-xl md:text-2xl font-black mb-3 tracking-tight">Power Efficient</h4>
+                <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed">Smart VFD drives that save up to 30% electricity consumption.</p>
               </div>
+              <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
             </div>
 
-            <div className="md:col-span-2 bg-slate-900 rounded-none p-10 flex flex-col md:flex-row items-center gap-8 group">
-              <div className="flex-1">
-                <h4 className="text-2xl font-black text-white mb-4">24/7 Smart Telemetry</h4>
-                <p className="text-slate-400 text-sm font-medium">All our Water ATMs feature GSM-based remote monitoring for flow and collection data.</p>
+            <div className="md:col-span-2 bg-slate-900 rounded-none p-10 flex flex-col md:flex-row items-center gap-10 group overflow-hidden relative">
+              <div className="flex-1 z-10 text-center md:text-left">
+                <h4 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">24/7 Smart Telemetry</h4>
+                <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed max-w-md">
+                  All our Water ATMs feature GSM-based remote monitoring for flow and collection data, managed via secure cloud dashboard.
+                </p>
               </div>
-              <div className="w-32 h-32 bg-regil-blue/20 rounded-none flex items-center justify-center border border-white/10">
-                <Activity className="w-12 h-12 text-regil-sky animate-pulse" />
+              <div className="w-24 h-24 md:w-32 md:h-32 bg-regil-blue/10 rounded-none flex items-center justify-center border border-white/5 relative z-10 group-hover:bg-regil-blue/20 transition-all duration-500">
+                <Activity className="w-10 h-10 md:w-14 md:h-14 text-regil-sky animate-pulse" />
               </div>
+              <div className="absolute bottom-0 right-0 w-64 h-64 bg-regil-blue/5 translate-y-1/2 translate-x-1/2 rounded-full blur-3xl" />
             </div>
           </div>
         </div>
