@@ -51,7 +51,7 @@ export interface SiteSettings {
 // ─── Default fallback (shown only when Supabase is unreachable) ─────────────
 export const DEFAULT_SETTINGS: SiteSettings = {
   email: 'info@rigelaqua.in',
-  whatsappNumber: '919000000000',
+  whatsappNumber: '918885999979',
   address: 'RigelAqua Industrial Zone, Guntur, Andhra Pradesh',
   productCategories: ['Domestic', 'Commercial', 'Industrial', 'Water ATM', 'Components'],
   bentoImage: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?auto=format&fit=crop&q=80&w=1200',

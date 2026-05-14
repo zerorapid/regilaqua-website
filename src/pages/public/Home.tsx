@@ -175,32 +175,27 @@ export default function Home() {
             {[
               {
                 icon: <Globe className="w-8 h-8" />,
-                step: '01',
                 title: 'Global Sourcing',
-                desc: 'We procure Tier-1 membranes & pumps directly from international manufacturers.'
+                desc: 'Procuring Tier-1 membranes and high-pressure pumps directly from top international manufacturers.'
               },
               {
                 icon: <Settings className="w-8 h-8" />,
-                step: '02',
                 title: 'Custom Assembly',
-                desc: 'Every plant is custom-built based on YOUR local water TDS and chemistry.'
+                desc: 'Every system is precision-engineered based on your specific local water TDS and chemical profile.'
               },
               {
                 icon: <Truck className="w-8 h-8" />,
-                step: '03',
-                title: 'Rapid Install',
-                desc: 'Our specialists deploy systems within 48 hours to any site in Andhra Pradesh.'
+                title: 'Rapid Installation',
+                desc: 'Our specialized teams deploy and commission systems within 48 hours anywhere in Andhra Pradesh.'
               },
               {
                 icon: <ShieldCheck className="w-8 h-8" />,
-                step: '04',
-                title: 'Active AMC',
-                desc: 'Real-time monitoring and 24/7 service visits to ensure zero downtime.'
+                title: 'Active Maintenance',
+                desc: 'Comprehensive 24/7 service support and real-time monitoring to guarantee zero operational downtime.'
               }
             ].map((item, idx) => (
               <div key={idx} className="group p-10 bg-white border border-transparent hover:border-slate-200 transition-all hover:shadow-2xl">
                 <div className="text-regil-blue mb-8 group-hover:scale-110 transition-transform duration-500">{item.icon}</div>
-                <div className="text-4xl font-black text-slate-100 mb-6 group-hover:text-regil-sky/20 transition-colors">{item.step}</div>
                 <h4 className="text-xl font-black text-slate-900 mb-4">{item.title}</h4>
                 <p className="text-slate-500 font-medium leading-relaxed text-sm">{item.desc}</p>
               </div>
@@ -421,9 +416,6 @@ export default function Home() {
                     <h5 className="font-black text-slate-900 tracking-tight">{t.name}</h5>
                     <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black leading-none">{t.role}</p>
                   </div>
-                </div>
-                <div className="absolute top-10 right-10 text-slate-200 group-hover:text-regil-sky/20 transition-colors">
-                  <MessageSquare className="w-12 h-12" />
                 </div>
               </div>
             ))}
