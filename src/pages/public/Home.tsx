@@ -10,7 +10,6 @@ import {
   Globe,
   Settings,
   Truck,
-  MessageSquare,
   ChevronDown,
   Star,
   CheckCircle2,
