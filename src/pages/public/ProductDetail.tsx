@@ -147,7 +147,7 @@ export default function ProductDetail() {
           <div className="lg:col-span-5">
             <div className="sticky top-32">
               <div className="mb-8">
-                <span className="inline-block px-3 py-1 bg-regil-sky/10 text-regil-blue text-[10px] font-black uppercase tracking-widest mb-4 border border-regil-sky/20">
+                <span className="inline-block px-3 py-1 bg-regil-sky/10 text-regil-blue text-[10px] font-black uppercase tracking-widest mb-4 border border-regil-sky/20 rounded-none">
                   {product.category}
                 </span>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter leading-tight">
@@ -159,7 +159,7 @@ export default function ProductDetail() {
                 </div>
               </div>
 
-              <div className="mb-10 p-8 bg-slate-50 border border-slate-100">
+              <div className="mb-10 p-8 bg-slate-50 border border-slate-100 rounded-none">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Estimated Market Price</p>
                 <div className="text-4xl font-black text-slate-900 mb-2">{product.price || 'Contact for Price'}</div>
                 <p className="text-xs text-slate-500 font-medium">*Prices may vary based on site requirements and TDS levels.</p>

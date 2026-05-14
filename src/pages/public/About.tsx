@@ -28,7 +28,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="inline-block px-4 py-1 bg-regil-sky/10 text-regil-blue text-[10px] font-black uppercase tracking-widest mb-6 border border-regil-sky/20">Our Journey</span>
+            <span className="inline-block px-4 py-1 bg-regil-sky/10 text-regil-blue text-[10px] font-black uppercase tracking-widest mb-6 border border-regil-sky/20 rounded-none">Our Journey</span>
             <h1 className="text-4xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">
               The Story of <span className="text-regil-blue underline decoration-regil-sky underline-offset-8">RegilAqua</span>
             </h1>
@@ -43,12 +43,12 @@ export default function About() {
               Water ATMs, and domestic purifiers.
             </p>
             <div className="grid grid-cols-2 gap-6">
-              <div className="p-6 bg-slate-50 border border-slate-200 transition-all hover:bg-white hover:shadow-xl group">
+              <div className="p-6 bg-slate-50 border border-slate-200 transition-all hover:bg-white hover:shadow-xl group rounded-none">
                 <Globe className="text-regil-blue w-8 h-8 mb-4 group-hover:rotate-12 transition-transform" />
                 <h4 className="font-black text-slate-900 mb-1">Global Sourcing</h4>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Premium Import Parts</p>
               </div>
-              <div className="p-6 bg-slate-50 border border-slate-200 transition-all hover:bg-white hover:shadow-xl group">
+              <div className="p-6 bg-slate-50 border border-slate-200 transition-all hover:bg-white hover:shadow-xl group rounded-none">
                 <ShieldCheck className="text-regil-blue w-8 h-8 mb-4 group-hover:rotate-12 transition-transform" />
                 <h4 className="font-black text-slate-900 mb-1">Local Service</h4>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">AP Wide Support</p>
@@ -64,19 +64,19 @@ export default function About() {
             <img
               src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600"
               alt="Lab testing"
-              className="w-full h-[300px] object-cover border-4 border-slate-50 shadow-2xl"
+              className="w-full h-[300px] object-cover border-4 border-slate-50 shadow-2xl rounded-none"
             />
             <img
               src="https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?auto=format&fit=crop&q=80&w=600"
               alt="Installation"
-              className="w-full h-[300px] object-cover mt-8 border-4 border-slate-50 shadow-2xl"
+              className="w-full h-[300px] object-cover mt-8 border-4 border-slate-50 shadow-2xl rounded-none"
             />
           </motion.div>
         </div>
 
         {/* Vision & Mission */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
-          <div className="p-12 bg-regil-indigo text-white shadow-2xl relative overflow-hidden group">
+          <div className="p-12 bg-regil-indigo text-white shadow-2xl relative overflow-hidden group rounded-none">
             <Eye className="absolute -right-8 -top-8 w-48 h-48 opacity-10 group-hover:rotate-12 transition-transform duration-700" />
             <div className="relative z-10">
               <div className="w-16 h-16 bg-white/10 flex items-center justify-center mb-8 border border-white/20">
@@ -88,7 +88,7 @@ export default function About() {
               </p>
             </div>
           </div>
-          <div className="p-12 bg-regil-blue text-white shadow-2xl relative overflow-hidden group">
+          <div className="p-12 bg-regil-blue text-white shadow-2xl relative overflow-hidden group rounded-none">
             <Target className="absolute -right-8 -bottom-8 w-48 h-48 opacity-10 group-hover:-rotate-12 transition-transform duration-700" />
             <div className="relative z-10">
               <div className="w-16 h-16 bg-white/10 flex items-center justify-center mb-8 border border-white/20">
@@ -108,8 +108,8 @@ export default function About() {
             <h2 className="text-regil-blue font-black uppercase tracking-widest text-xs mb-4">Leadership</h2>
             <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">The Driving Force</h3>
           </div>
-          <div className="bg-slate-50 border border-slate-200 p-8 md:p-16 flex flex-col md:flex-row items-center gap-16">
-            <div className="w-64 h-64 shrink-0 bg-slate-200 overflow-hidden border-8 border-white shadow-2xl">
+          <div className="bg-slate-50 border border-slate-200 p-8 md:p-16 flex flex-col md:flex-row items-center gap-16 rounded-none">
+            <div className="w-64 h-64 shrink-0 bg-slate-200 overflow-hidden border-8 border-white shadow-2xl rounded-none">
               <img 
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800" 
                 alt="Founder" 
@@ -138,7 +138,7 @@ export default function About() {
         </div>
 
         {/* Why Trust Us */}
-        <div className="bg-slate-900 p-12 md:p-20 relative overflow-hidden mb-32">
+        <div className="bg-slate-900 p-12 md:p-20 relative overflow-hidden mb-32 rounded-none">
           <div className="absolute top-0 right-0 w-64 h-64 bg-regil-blue opacity-20 blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-regil-indigo opacity-20 blur-3xl translate-y-1/2 -translate-x-1/2" />
 
@@ -167,7 +167,7 @@ export default function About() {
                 desc: 'Every "RegilAqua" labeled product comes with committed on-site warranty support.'
               }
             ].map((item, idx) => (
-              <div key={idx} className="text-center group p-8 border border-white/5 hover:bg-white/5 transition-all">
+              <div key={idx} className="text-center group p-8 border border-white/5 hover:bg-white/5 transition-all rounded-none">
                 <div className="flex justify-center mb-8 group-hover:scale-110 transition-transform">{item.icon}</div>
                 <h3 className="text-xl font-black text-white mb-4">{item.title}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed font-medium">{item.desc}</p>
@@ -185,7 +185,7 @@ export default function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="p-10 border border-slate-200 bg-white relative group hover:shadow-2xl transition-all">
+              <div key={idx} className="p-10 border border-slate-200 bg-white relative group hover:shadow-2xl transition-all rounded-none">
                 <div className="flex text-regil-orange mb-6">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className={cn("w-5 h-5", i < (t.rating || 5) ? "fill-current" : "text-slate-300")} />
@@ -193,7 +193,7 @@ export default function About() {
                 </div>
                 <p className="text-slate-700 mb-8 leading-relaxed font-medium uppercase text-sm tracking-tight line-clamp-4">"{t.content}"</p>
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-regil-sky/20 flex items-center justify-center font-black text-regil-blue">
+                  <div className="w-10 h-10 bg-regil-sky/20 flex items-center justify-center font-black text-regil-blue rounded-none">
                     {t.name[0]}
                   </div>
                   <div>
