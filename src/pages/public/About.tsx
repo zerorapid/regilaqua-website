@@ -30,7 +30,7 @@ export default function About() {
           >
             <span className="inline-block px-4 py-1 bg-regil-sky/10 text-regil-blue text-[10px] font-black uppercase tracking-widest mb-6 border border-regil-sky/20 rounded-none">Our Journey</span>
             <h1 className="text-4xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">
-              The Story of <span className="text-regil-blue underline decoration-regil-sky underline-offset-8">RegilAqua</span>
+              About Our <span className="text-regil-blue underline decoration-regil-sky underline-offset-8">Company</span>
             </h1>
             <p className="text-lg text-slate-600 mb-6 leading-relaxed font-medium">
               Founded in Andhra Pradesh, RegilAqua was born with a simple yet powerful mission: 
