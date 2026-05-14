@@ -143,7 +143,7 @@ export default function About() {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-regil-indigo opacity-20 blur-3xl translate-y-1/2 -translate-x-1/2" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Why Trust RegilAqua?</h2>
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Why Choose Us?</h2>
             <p className="text-slate-400 font-medium text-lg leading-relaxed">
               We don't just sell equipment; we provide end-to-end water security solutions 
               that power businesses and keep families healthy.
@@ -179,8 +179,8 @@ export default function About() {
         {/* Testimonials */}
         <div className="mb-20">
           <div className="text-center mb-16">
-            <h2 className="text-regil-indigo font-black uppercase tracking-widest text-xs mb-4">Market Feedback</h2>
-            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Trusted Voices</h3>
+            <h2 className="text-regil-indigo font-black uppercase tracking-widest text-xs mb-4">Testimonials</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Client Testimonials</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

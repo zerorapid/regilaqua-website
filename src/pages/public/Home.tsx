@@ -167,8 +167,8 @@ export default function Home() {
       <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-regil-orange font-black uppercase tracking-widest text-xs mb-4">How we deliver peace of mind</h2>
-            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">The RegilAqua Process</h3>
+            <h2 className="text-regil-orange font-black uppercase tracking-widest text-xs mb-4">Our Process</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Operational Methodology</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1 w-full bg-slate-100 rounded-none overflow-hidden border border-slate-100 p-1">
@@ -221,8 +221,8 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <span className="text-regil-blue font-black uppercase tracking-widest text-[10px] mb-4 inline-block">The RigelAqua Story</span>
-              <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter">Global Technology. <br/>Local Heart.</h2>
+              <span className="text-regil-blue font-black uppercase tracking-widest text-[10px] mb-4 inline-block">About Us</span>
+              <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter">Company Profile</h2>
               <p className="text-lg text-slate-600 font-medium mb-8 leading-relaxed">
                 Founded in Andhra Pradesh, we bridged the gap between international water purification standards and local community needs. We don't just sell filters; we engineer trust.
               </p>
@@ -248,8 +248,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
             <div>
-              <h2 className="text-regil-orange font-black uppercase tracking-widest text-xs mb-4">Precision Engineering</h2>
-              <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Featured Solutions</h3>
+              <h2 className="text-regil-orange font-black uppercase tracking-widest text-xs mb-4">Products</h2>
+              <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Featured Products</h3>
             </div>
             <Link to="/products" className="bg-slate-900 text-white px-8 py-4 rounded-none font-black uppercase tracking-widest text-xs hover:bg-regil-blue transition-colors shadow-xl">
               View Entire Catalog
@@ -299,8 +299,8 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-regil-indigo font-black uppercase tracking-widest text-xs mb-4">Precision Components</h2>
-            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">The Core of RegilAqua</h3>
+            <h2 className="text-regil-indigo font-black uppercase tracking-widest text-xs mb-4">Technology</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Core Capabilities</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -360,8 +360,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div className="max-w-xl">
-              <h2 className="text-regil-blue font-black uppercase tracking-widest text-xs mb-4">Our Top Solutions</h2>
-              <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Built for Performance</h3>
+              <h2 className="text-regil-blue font-black uppercase tracking-widest text-xs mb-4">Categories</h2>
+              <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Product Categories</h3>
             </div>
             <Link to="/products" className="text-regil-blue font-black flex items-center space-x-2 group uppercase text-xs tracking-widest">
               <span>View all products</span>
@@ -395,8 +395,8 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-regil-blue font-black uppercase tracking-widest text-xs mb-4">Market Feedback</h2>
-            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Trusted Voices</h3>
+            <h2 className="text-regil-blue font-black uppercase tracking-widest text-xs mb-4">Testimonials</h2>
+            <h3 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Client Testimonials</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -431,8 +431,8 @@ export default function Home() {
         
         <div className="max-w-4xl mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter">Technical Help</h3>
-            <p className="text-slate-400 font-medium uppercase tracking-[0.2em] text-[10px]">Everything you need to know about our systems</p>
+            <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter">Frequently Asked Questions</h3>
+            <p className="text-slate-400 font-medium uppercase tracking-[0.2em] text-[10px]">Common inquiries about our systems</p>
           </div>
 
           <div className="space-y-4">
@@ -476,7 +476,7 @@ export default function Home() {
             <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-regil-sky rounded-full opacity-30 blur-3xl" />
             
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">Ready for better water?</h2>
+              <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">Contact Us</h2>
               <p className="text-regil-light text-xl mb-12 max-w-2xl mx-auto font-medium">
                 Whether it's a home purifier or a 10,000 LPH community plant, RegilAqua has the technology and local expertise to deliver.
               </p>

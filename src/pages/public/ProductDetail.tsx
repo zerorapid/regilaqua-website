@@ -198,7 +198,7 @@ export default function ProductDetail() {
 
                 {features.length > 0 && (
                   <div>
-                    <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">Key Highlights</h4>
+                    <h4 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">Features</h4>
                     <div className="grid grid-cols-2 gap-4">
                       {features.map((feat, i) => (
                         <div key={i} className="flex items-start space-x-3">
